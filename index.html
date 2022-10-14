@@ -73,7 +73,7 @@
 ================================= -->
 
 <!-- Flat Surface Shader BG -->
-<div id="page-fss" class="section-overlay" data-ambient-color="#570087" data-diffuse-color="#e000ff"></div>
+<div id="page-fss" class="section-overlay" data-ambient-color="#1f565d" data-diffuse-color="#ec1c35"></div>
 <!-- /End Flat Surface Shader BG -->
 
 <!-- Overlay BG -->
@@ -115,7 +115,7 @@
              write your email in newsletter-process.php and use:
              <form action="php/newsletter-process.php" id="newsletter-form" method="post"> insted of
              <form id="mc-form"> -->
-              <form id="newsletter-form" method="post">
+              <form id="newsletter-form" method="POST" action="mail.php">
 
               <!-- Input Group -->
               <div class="input-group">
@@ -205,15 +205,15 @@
 
             <!-- Logo -->
             <div class="p-t-b-15">
-              <img src="images/logo.png" height="60" width="49" alt="">
+              <img src="images/Expo-Logo.png" height="70" width="auto" alt="">
             </div>
             <!-- /End Logo -->
 
             <div class="p-t-b-15">
               <!-- Headline & Description -->
-              <h2><span class="font-weight-200">Before launching our</span><br>new Website</h2>
+              <h2><span class="font-weight-200">Before launching our</span><br>Education Expo 2022</h2>
 
-              <p>We're coming soon! Awesome template to present your future product or service.<br>We're
+              <p>We're coming soon! <br>We're
                 working hard to give you the best experience!<br>
               </p>
               <!-- /End Headline & Description -->
@@ -541,6 +541,53 @@
 
 <!-- Google Analytics -->
 <script>
+    var form = $('#newsletter-form'),
+    messageContainer = $('#message-newsletter'),
+    messageText = $('#message-newsletter .message-text');
+
+
+  form.submit(function (e) {
+
+
+    // remove the error class
+    form.find('.input-group').removeClass('error');
+        messageContainer.removeClass('error');
+
+
+    var errorAll = '';
+
+
+
+    // process the form
+    $.ajax({
+      type: 'POST',
+      url: 'mail.php',
+      data: $("#newsletter-form").serialize()
+    }).done(function (data) {
+      // handle errors
+      if (data['success'] !== true) {
+        if (data.errors.email) {
+          form.find('.input-group').addClass('error');
+          messageContainer.addClass('error');
+          errorAll = errorAll + ' ' + data.errors.email;
+        }
+        messageText.html(errorAll);
+      } else {
+        // display success message
+        messageText.html(data.confirmation);
+        form.find('.form-control').fadeIn().val('');
+      }
+      messageContainer.slideDown('slow', 'swing');
+      setTimeout(function () {
+        messageContainer.slideUp('slow', 'swing');
+      }, 10000);
+    }).fail(function (data) {
+      // for debug
+      console.log(data)
+    });
+
+    e.preventDefault();
+  });
   (function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {

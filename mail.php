@@ -15,7 +15,7 @@ $servername = "sg2nlmysql3plsk.secureserver.net:3306";
 $username = "newsletteradmin";
 $password = "Ghxc81*7";
 $dbname = "newsletter_emails";
-
+return ('heelo');
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      $email = test_input($_POST["email"]);
    }
 
-   $emailcheck2 = "SELECT email FROM email WHERE email='$email' AND source='3srefrigrationsolution.in'";
+   $emailcheck2 = "SELECT email FROM email WHERE email='$email' AND source='EduExpo2022.in'";
    $result2 = $conn->query($emailcheck2);
 
    if ($result2->num_rows > 0) {
@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $result = $conn->query($emailcheck);
 
    if ($result->num_rows == 0) {
-      $sql = "INSERT INTO `email` (`name`, `email`, `source`) VALUES ('$name', '$email', '3srefrigrationsolution.in')";
+      $sql = "INSERT INTO `email` (`name`, `email`, `source`) VALUES ('$name', '$email', 'EduExpo2022.in')";
       if ($conn->query($sql) === TRUE) {
          // echo "<script>console.log('New record created successfully')</script>";
         } else {
@@ -71,10 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
    }
       /* Set the mail sender. */
-      $mail->setFrom('Ahmed2horizon@gmail.com', 'Tahzeeb Abaya');
+      $mail->setFrom('talha.graphicon@gmail.com', 'Tahzeeb Abaya');
 
       /* Add a recipient. */
-      $mail->addAddress('Ahmed2horizon@gmail.com', 'Tahzeeb Abaya');
+      $mail->addAddress('talha.graphicon@gmail.com', 'Tahzeeb Abaya');
 
       //Content
       $mail->isHTML(true);                                  //Set email format to HTML
